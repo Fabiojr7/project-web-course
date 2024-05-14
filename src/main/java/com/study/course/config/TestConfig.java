@@ -1,8 +1,10 @@
 package com.study.course.config;
 
+import com.study.course.entities.Category;
 import com.study.course.entities.Order;
 import com.study.course.entities.User;
 import com.study.course.entities.enums.OrderStatus;
+import com.study.course.repositories.CategoryRepository;
 import com.study.course.repositories.OrderRepository;
 import com.study.course.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +25,25 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
-        User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
-        User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
+        User user1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
+        User user2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 
-        Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.PAID, u1);
-        Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2);
-        Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT, u1);
+        Order order1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.PAID, user1);
+        Order order2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, user2);
+        Order order3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT, user1);
 
-        userRepository.saveAll(Arrays.asList(u1,u2));
-        orderRepository.saveAll(Arrays.asList(o1,o2,o3));
+        Category category1 = new Category(null, "Electronics");
+        Category category2 = new Category(null, "Books");
+        Category category3 = new Category(null, "Computers");
+
+        userRepository.saveAll(Arrays.asList(user1,user2));
+        orderRepository.saveAll(Arrays.asList(order1, order2, order3));
+        categoryRepository.saveAll(Arrays.asList(category1, category2, category3));
     }
 }
